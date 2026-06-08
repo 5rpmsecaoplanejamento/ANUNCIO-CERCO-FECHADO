@@ -94,14 +94,15 @@ h1 b{color:var(--caqui-l);font-weight:700}
 
 .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:0 0 14px}
 .kpi-row.bo-kpi-row{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px;margin-bottom:22px}
-.kpi{background:var(--panel);border-radius:13px;padding:15px 15px 13px;box-shadow:var(--shadow);
-  border:1px solid var(--line);position:relative;overflow:hidden;transition:.25s}
-.kpi::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent,var(--caqui))}
+.kpi{background:#f6f2e8;border-radius:14px;padding:15px 15px 13px 22px;box-shadow:var(--shadow);
+  border:1px solid #ddd3bf;position:relative;overflow:hidden;transition:.25s}
+.kpi::after{content:"";position:absolute;top:0;left:0;width:5px;height:100%;background:var(--accent,var(--caqui));border-radius:14px 0 0 14px}
 .kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
-.kpi .lbl{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700}
-.kpi .val{font-family:'Teko';font-weight:600;font-size:44px;line-height:.82;margin-top:9px;color:var(--ink);font-variant-numeric:tabular-nums}
-.kpi .sub{font-size:10.5px;color:var(--muted);margin-top:5px}
+.kpi .lbl{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#8a7f66;font-weight:700}
+.kpi .val{font-family:'Teko';font-weight:600;font-size:44px;line-height:.82;margin-top:9px;color:var(--accent,var(--ink));font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:10.5px;color:#786f5d;margin-top:5px}
 .kpi-row.r2{margin-bottom:18px}
+.rat-kpi-grid{grid-template-columns:repeat(4,1fr)}
 
 .toolbar{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px 18px;
   box-shadow:var(--shadow);margin-bottom:22px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
@@ -270,29 +271,25 @@ footer b{color:var(--caqui-d)}
     </div>
   </div>
 
-  <div class="kpi-row">
-    <div class="kpi" style="--accent:var(--preto)"><div class="lbl">Registros (RAT)</div><div class="val" id="k-rat">—</div><div class="sub">atividades lançadas</div></div>
-    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Militares Empregados</div><div class="val" id="k-mil">—</div><div class="sub" id="k-mil-sub">efetivo único no período</div></div>
-    <div class="kpi" style="--accent:var(--azul)"><div class="lbl">Viaturas</div><div class="val" id="k-via">—</div><div class="sub" id="k-via-sub">meios únicos no período</div></div>
-    <div class="kpi" style="--accent:var(--caqui-d)"><div class="lbl">Tempo Operacional</div><div class="val" id="k-hora">—</div><div class="sub">horas-operação somadas</div></div>
-    <div class="kpi" style="--accent:var(--verde)"><div class="lbl">Duração Média</div><div class="val" id="k-med">—</div><div class="sub">min por atividade</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">REDS Relacionados</div><div class="val" id="k-reds">—</div><div class="sub">vínculos a ocorrências</div></div>
-  </div>
-  <div class="kpi-row r2">
-    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Pessoas Abordadas</div><div class="val" id="k-pes">—</div><div class="sub">fiscalização de pessoas</div></div>
-    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Veículos Fiscalizados</div><div class="val" id="k-veif">—</div><div class="sub">abordagem veicular</div></div>
-    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Locais Fiscalizados</div><div class="val" id="k-locf">—</div><div class="sub">pontos vistoriados</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Armas Brancas</div><div class="val" id="k-arm">—</div><div class="sub">recolhidas (RAT)</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Drogas (un.)</div><div class="val" id="k-dro">—</div><div class="sub">entorpecentes</div></div>
-    <div class="kpi" style="--accent:var(--azul)"><div class="lbl">Veículos Removidos</div><div class="val" id="k-rem">—</div><div class="sub">motos + automóveis</div></div>
-  </div>
-
   <div class="toolbar">
     <div class="fg"><label for="f-data">Data</label><select id="f-data"><option value="">Todas as datas</option></select></div>
     <div class="fg"><label for="f-op">Operação</label><select id="f-op"><option value="">Todas as operações</option></select></div>
     <div class="fg"><label for="f-bairro">Bairro</label><select id="f-bairro"><option value="">Todos os bairros</option></select></div>
     <div class="fg"><label for="f-faixa">Faixa horária</label><select id="f-faixa"><option value="">Todas as faixas</option></select></div>
     <div class="tb-right"><button class="btn ghost" id="btn-clear-rat">Limpar filtros</button></div>
+  </div>
+
+  <div class="kpi-row rat-kpi-grid">
+    <div class="kpi" style="--accent:var(--preto)"><div class="lbl">Registros (RAT)</div><div class="val" id="k-rat">—</div><div class="sub">atividades lançadas</div></div>
+    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Militares Empregados</div><div class="val" id="k-mil">—</div><div class="sub" id="k-mil-sub">militares únicos no período</div></div>
+    <div class="kpi" style="--accent:var(--azul)"><div class="lbl">Viaturas</div><div class="val" id="k-via">—</div><div class="sub" id="k-via-sub">viaturas únicas no período</div></div>
+    <div class="kpi" style="--accent:var(--verde)"><div class="lbl">Tempo Operacional</div><div class="val" id="k-hora">—</div><div class="sub">horas-operação somadas</div></div>
+  </div>
+  <div class="kpi-row rat-kpi-grid r2">
+    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Duração Média</div><div class="val" id="k-med">—</div><div class="sub">min por atividade</div></div>
+    <div class="kpi" style="--accent:var(--caqui-d)"><div class="lbl">Pessoas Abordadas</div><div class="val" id="k-pes">—</div><div class="sub">fiscalização de pessoas</div></div>
+    <div class="kpi" style="--accent:var(--azul)"><div class="lbl">Veículos Fiscalizados</div><div class="val" id="k-veif">—</div><div class="sub">abordagem veicular</div></div>
+    <div class="kpi" style="--accent:var(--caqui)"><div class="lbl">Locais Fiscalizados</div><div class="val" id="k-locf">—</div><div class="sub">pontos vistoriados</div></div>
   </div>
 
   <div class="section-title">Evolução <span>Diária da Operação</span></div>
@@ -310,11 +307,6 @@ footer b{color:var(--caqui-d)}
     <div class="panel"><div class="p-head"><h2>Distribuição Horária</h2><span class="hint">início das atividades</span></div><div class="p-body"><div class="chartbox"><canvas id="chHora"></canvas></div></div></div>
     <div class="panel"><div class="p-head"><h2>Empenho por Unidade</h2><span class="hint">fração registradora</span></div><div class="p-body"><div class="chartbox"><canvas id="chUnid"></canvas></div></div></div>
   </div>
-  <div class="section-title">Produtividade e <span>Resultados</span></div>
-  <div class="grid g-21" style="margin-bottom:22px">
-    <div class="panel"><div class="p-head"><h2>Indicadores de Produtividade</h2><span class="hint">somatório do período</span></div><div class="p-body"><div class="prod-grid" id="prodGrid"></div></div></div>
-    <div class="panel"><div class="p-head"><h2>REDS por Natureza</h2><span class="hint" id="redsHint"></span></div><div class="p-body"><div class="chartbox tall"><canvas id="chReds"></canvas></div></div></div>
-  </div>
   <div class="section-title">Dispersão <span>Georreferenciada</span></div>
   <div class="panel" style="margin-bottom:8px">
     <div class="p-head"><h2>Mapa das Atividades</h2><span class="hint" id="mapHint"></span></div>
@@ -331,6 +323,9 @@ footer b{color:var(--caqui-d)}
         <th data-s="min">Duração <span class="ar">▲▼</span></th><th data-s="efetivo">Efet. <span class="ar">▲▼</span></th>
         <th data-s="viaturas">Vtr <span class="ar">▲▼</span></th><th data-s="nreds">REDS <span class="ar">▲▼</span></th>
       </tr></thead><tbody id="tblBody"></tbody></table>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:14px">
+      <button id="btn-load-more-rat" class="btn">Carregar mais</button>
     </div></div>
   </div>
 
@@ -671,13 +666,16 @@ function buildRAT(csv){
     const inds=[];const re=/idIndicador:\d+\/descricao:(.*?)\/quantidade:(\d+)\//g;let m;
     while((m=re.exec(r.PRODUTIVIDADE||'')))inds.push({desc:m[1].trim(),q:parseInt(m[2])});
     const reds=[...(r.REDS_RELACIONADOS||'').matchAll(/naturezaDescricao:(.*?)\/\|/g)].map(x=>x[1].trim());
+    const efetivos=[...(r.EFETIVOS||'').matchAll(/numeroPolicia:(\d+)/g)].map(x=>x[1].trim()).filter(Boolean);
+    const viaturaIds=[...(r.VIATURAS||'').matchAll(/prefixo:([^/]+)\//g)].map(x=>x[1].trim()).filter(Boolean);
     return {rat:(r.NUMERO_RAT||'').slice(0,15),hora:(r.HORARIO_FATO||'').slice(0,5),faixa6:r.FAIXA_HORA_6||'',
       bairro:normBairro(r.BAIRRO),logradouro:r.LOGRADOURO||'',
       operacao:r.DESCR_NATUREZA_PRINCIPAL||'(sem natureza)',unidade:r.UNID_REGISTRO||'',
       lat:f2(r.LATITUDE),lng:f2(r.LONGITUDE),min:gi(r.OPR_TEMPO_TOTAL_MINUTOS),
       ini:(r.OPR_HORARIO_INICIO||'').slice(0,5),fim:(r.OPR_HORARIO_TERMINO||'').slice(0,5),
-      efetivo:(r.EFETIVOS||'').match(/numeroPolicia:\d+/g)?.length||0,
-      viaturas:(r.VIATURAS||'').match(/prefixo:[^/]+\//g)?.length||0,
+      efetivo:efetivos.length,
+      viaturas:viaturaIds.length,
+      efetivos,viaturaIds,
       reds,indicadores:inds,data:r.DATA_FATO||'',municipio:r.MUNICIPIO||'',nomeOp:r.NOME_OPERACAO||''};});
   const milSet=new Set(),viaSet=new Set();
   raw.forEach(r=>{(r.EFETIVOS||'').match(/numeroPolicia:(\d+)/g)?.forEach(x=>milSet.add(x));
@@ -736,7 +734,7 @@ function buildBO(csv){
 
 /* ====================== ESTADO ====================== */
 let DR=null,DB=null,opColor={},natColor={};
-let sR={op:'',bairro:'',faixa:'',data:''},sortR='hora',dirR=1;
+let sR={op:'',bairro:'',faixa:'',data:''},sortR='__recent',dirR=1,ratVisible=15;
 let sB={nat:'',bairro:'',faixa:'',data:''},sortB='__recent',dirB=1,boVisible=15;
 let mapR,layerR,mapB,layerB;
 let chOp,chBairro,chHora,chUnid,chReds,chRTempo,chBOnat,chBObairro,chBOhora,chBOunid,chBOmat,chBOmeio,chBOtempo;
@@ -764,7 +762,7 @@ function chartsR(){
   chOp=new Chart(chartCtx('chOp'),{type:'doughnut',data:{labels:op.map(x=>opShort(x[0])),datasets:[{data:op.map(x=>x[1]),backgroundColor:op.map(x=>opColor[x[0]]),borderColor:'#fff',borderWidth:3,hoverOffset:8}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'right',labels:{padding:11,usePointStyle:true,pointStyle:'circle',font:{size:11},boxWidth:8}},tooltip:{...tip(),callbacks:{label:c=>` ${c.raw} RAT`}}}},
     plugins:[centerText(()=>rows.length,'ATIVIDADES')]});
-  const b=countBy(rows,'bairro');
+  const b=countBy(rows,'bairro').slice(0,10);
   if(chBairro)chBairro.destroy();
   chBairro=hbar('chBairro',b.map(x=>x[0]),b.map(x=>x[1]),'#a08f63',' RAT');
   const hc={};rows.forEach(r=>{const h=+r.hora.slice(0,2);if(!isNaN(h))hc[h]=(hc[h]||0)+1;});
@@ -778,13 +776,16 @@ function chartsR(){
   chRTempo=lineChart('chRTempo',dias.map(diaCurto),[{label:'Atividades',data:dias.map(d=>mc[d]||0),color:'#a08f63',fill:'rgba(160,143,99,.14)'}]);
 }
 function buildReds(){
+  if(!document.getElementById('chReds')||!document.getElementById('redsHint'))return;
   document.getElementById('redsHint').textContent=`${DR.meta.reds_total} vínculos`;
   if(chReds)chReds.destroy();
   if(!DR.reds.length){document.getElementById('chReds').parentElement.innerHTML='<div style="display:grid;place-items:center;height:100%;color:#b3ab98;font-style:italic">Sem REDS no período</div>';return;}
   chReds=hbar('chReds',DR.reds.map(x=>x.k.length>34?x.k.slice(0,32)+'…':x.k),DR.reds.map(x=>x.v),'#AB2328',' REDS',DR.reds.map(x=>x.k));
 }
 function buildProd(){
-  const grid=document.getElementById('prodGrid');grid.innerHTML='';
+  const grid=document.getElementById('prodGrid');
+  if(!grid)return;
+  grid.innerHTML='';
   const cf=k=>{const d=norm(k);if(d.includes('aborda')||d.includes('fiscaliz')||d.includes('autuad'))return 'var(--caqui-d)';
     if(d.includes('moto')||d.includes('automovel')||d.includes('removido'))return 'var(--azul)';
     if(d.includes('tco')||d.includes('flagrante')||d.includes('mandado')||d.includes('autor'))return 'var(--verde)';return 'var(--vermelho)';};
@@ -793,24 +794,28 @@ function buildProd(){
 }
 function mapRAT(){
   const rows=filtR();
-  if(!mapR){mapR=L.map('map',{scrollWheelZoom:false}).setView([-19.762,-47.918],13);
+  if(!mapR){mapR=L.map('map',{scrollWheelZoom:true}).setView([-19.762,-47.918],13);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap, © CARTO',maxZoom:19}).addTo(mapR);}
   if(layerR)layerR.remove();layerR=L.layerGroup().addTo(mapR);const pts=[];
-  rows.forEach(r=>{if(!r.lat||!r.lng)return;const rad=6+Math.sqrt(r.min)*0.7;
-    L.circleMarker([r.lat,r.lng],{radius:rad,fillColor:opColor[r.operacao],color:'#fff',weight:2,opacity:1,fillOpacity:.78})
+  rows.forEach(r=>{if(!r.lat||!r.lng)return;const col=opColor[r.operacao]||'#857649';
+    L.circleMarker([r.lat,r.lng],{radius:6,fillColor:col,color:col,weight:0,opacity:1,fillOpacity:.88})
       .bindPopup(`<b>${r.bairro}</b><br>${opShort(r.operacao)}<br>${r.ini}–${r.fim} · ${r.min} min<br>${r.unidade.replace('/5 RPM','')}<br>Efetivo: ${r.efetivo} · Vtr: ${r.viaturas}${r.reds.length?'<br><span style="color:#8c1c20;font-weight:600">REDS: '+r.reds.length+'</span>':''}`).addTo(layerR);
     pts.push([r.lat,r.lng]);});
   if(pts.length)mapR.fitBounds(pts,{padding:[40,40],maxZoom:14});
-  document.getElementById('mapHint').textContent=`${pts.length} ponto(s) · raio ∝ duração`;
+  document.getElementById('mapHint').textContent=`${pts.length} ponto(s) · cores por tipo de operação`;
   const lg=document.getElementById('mapLegend');lg.innerHTML='';
   DR.operacoes.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i style="background:${opColor[o.k]}"></i>${opShort(o.k)}</span>`));
   setTimeout(()=>mapR.invalidateSize(),150);
 }
 function tableRAT(){
   let rows=filtR().map(r=>({...r,nreds:r.reds.length}));
-  rows.sort((a,b)=>{let x=a[sortR],y=b[sortR];if(typeof x==='string'){x=norm(x);y=norm(y);}return x<y?-dirR:x>y?dirR:0;});
+  rows.sort((a,b)=>{
+    if(sortR==='__recent')return recentStamp(b)-recentStamp(a);
+    let x=a[sortR],y=b[sortR];if(typeof x==='string'){x=norm(x);y=norm(y);}return x<y?-dirR:x>y?dirR:0;
+  });
+  const total=rows.length,shown=Math.min(ratVisible,total),slice=rows.slice(0,shown);
   const tb=document.getElementById('tblBody');tb.innerHTML='';
-  rows.forEach(r=>tb.insertAdjacentHTML('beforeend',`<tr>
+  slice.forEach(r=>tb.insertAdjacentHTML('beforeend',`<tr>
     <td class="mono">${r.hora}<div class="rat-id">${r.rat}</div></td>
     <td><span class="cell-bairro">${r.bairro}</span><div class="cell-sub">${r.logradouro||''}</div></td>
     <td><span class="tg" style="background:${opColor[r.operacao]}">${opShort(r.operacao)}</span></td>
@@ -818,28 +823,31 @@ function tableRAT(){
     <td class="mono">${r.min}′<div class="cell-sub">${r.ini}–${r.fim}</div></td>
     <td class="mono">${r.efetivo}</td><td class="mono">${r.viaturas}</td>
     <td>${r.reds.length?`<span class="reds-mini">${r.reds.length} ocorr.</span>`:'<span class="pill zero">—</span>'}</td></tr>`));
-  document.getElementById('tblHint').textContent=`${rows.length} de ${DR.records.length} registros · clique para ordenar`;
+  document.getElementById('tblHint').textContent=`mostrando ${shown} de ${total} registro(s)${sortR==='__recent'?' · mais recentes primeiro':' · clique para ordenar'}`;
+  const btn=document.getElementById('btn-load-more-rat');
+  if(btn){
+    btn.style.display=total>shown?'inline-flex':'none';
+    btn.textContent=total>shown?`Carregar mais 15 (${total-shown} restante${total-shown>1?'s':''})`:'Todos carregados';
+  }
 }
 function kpisR(){
-  const rows=filtR(),min=rows.reduce((s,r)=>s+r.min,0),filt=sR.op||sR.bairro||sR.faixa;
+  const rows=filtR(),min=rows.reduce((s,r)=>s+r.min,0),filt=sR.op||sR.bairro||sR.faixa||sR.data;
   document.getElementById('k-rat').textContent=rows.length;
   document.getElementById('k-hora').textContent=(min/60).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
   document.getElementById('k-med').textContent=rows.length?Math.round(min/rows.length):0;
-  document.getElementById('k-reds').textContent=rows.reduce((s,r)=>s+r.reds.length,0);
-  if(filt){document.getElementById('k-mil').textContent=rows.reduce((s,r)=>s+r.efetivo,0);
-    document.getElementById('k-via').textContent=rows.reduce((s,r)=>s+r.viaturas,0);
-    document.getElementById('k-mil-sub').textContent='empenhos no recorte';document.getElementById('k-via-sub').textContent='empenhos no recorte';
+  const milRecorte=new Set(),viaRecorte=new Set();
+  rows.forEach(r=>{(r.efetivos||[]).forEach(x=>milRecorte.add(x));(r.viaturaIds||[]).forEach(x=>viaRecorte.add(x));});
+  if(filt){document.getElementById('k-mil').textContent=milRecorte.size;
+    document.getElementById('k-via').textContent=viaRecorte.size;
+    document.getElementById('k-mil-sub').textContent='militares únicos no recorte';document.getElementById('k-via-sub').textContent='viaturas únicas no recorte';
   }else{document.getElementById('k-mil').textContent=DR.meta.militares;document.getElementById('k-via').textContent=DR.meta.viaturas;
-    document.getElementById('k-mil-sub').textContent='efetivo único no período';document.getElementById('k-via-sub').textContent='meios únicos no período';}
+    document.getElementById('k-mil-sub').textContent='militares únicos no período';document.getElementById('k-via-sub').textContent='viaturas únicas no período';}
   const sum=re=>{let t=0;rows.forEach(r=>r.indicadores.forEach(i=>{if(re.test(norm(i.desc)))t+=i.q;}));return t;};
   document.getElementById('k-pes').textContent=sum(/abordad/);
   document.getElementById('k-veif').textContent=sum(/veiculos fiscaliz/);
   document.getElementById('k-locf').textContent=sum(/locais fiscaliz/);
-  document.getElementById('k-arm').textContent=sum(/arma branca|perfurante|cortante/);
-  document.getElementById('k-dro').textContent=sum(/crack|droga|maconha|cocaina/);
-  document.getElementById('k-rem').textContent=sum(/removido/);
 }
-function renderR(){kpisR();chartsR();tableRAT();mapRAT();}
+function renderR(){ratVisible=15;kpisR();chartsR();tableRAT();mapRAT();}
 
 /* ---- charts BO ---- */
 function chartsB(){
@@ -1029,6 +1037,7 @@ document.getElementById('f-bairro').addEventListener('change',e=>{sR.bairro=e.ta
 document.getElementById('f-faixa').addEventListener('change',e=>{sR.faixa=e.target.value;renderR();});
 document.getElementById('btn-clear-rat').addEventListener('click',()=>{sR={op:'',bairro:'',faixa:'',data:''};
   ['f-op','f-bairro','f-faixa','f-data'].forEach(i=>document.getElementById(i).value='');renderR();});
+document.getElementById('btn-load-more-rat').addEventListener('click',()=>{ratVisible+=15;tableRAT();});
 document.getElementById('bf-data').addEventListener('change',e=>{sB.data=e.target.value;renderB();});
 document.getElementById('bf-nat').addEventListener('change',e=>{sB.nat=e.target.value;renderB();});
 document.getElementById('bf-bairro').addEventListener('change',e=>{sB.bairro=e.target.value;renderB();});
@@ -1042,7 +1051,7 @@ document.querySelectorAll('table.dt').forEach(tbl=>{
   tbl.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
     const k=th.dataset.s;
     if(isBO){boVisible=15;if(sortB===k)dirB*=-1;else{sortB=k;dirB=1;}tableBO();}
-    else{if(sortR===k)dirR*=-1;else{sortR=k;dirR=1;}tableRAT();}
+    else{ratVisible=15;if(sortR===k)dirR*=-1;else{sortR=k;dirR=1;}tableRAT();}
   }));
 });
 document.querySelectorAll('.btn-reload').forEach(b=>b.addEventListener('click',function(){
