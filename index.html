@@ -93,6 +93,7 @@ h1 b{color:var(--caqui-l);font-weight:700}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
 .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:0 0 14px}
+.kpi-row.bo-kpi-row{grid-template-columns:repeat(4,1fr);gap:16px;margin-top:18px;margin-bottom:22px}
 .kpi{background:var(--panel);border-radius:13px;padding:15px 15px 13px;box-shadow:var(--shadow);
   border:1px solid var(--line);position:relative;overflow:hidden;transition:.25s}
 .kpi::after{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent,var(--caqui))}
@@ -183,7 +184,7 @@ footer b{color:var(--caqui-d)}
   z-index:9999;flex-direction:column;gap:16px;transition:opacity .3s}
 
 /* ===== DESTAQUES ===== */
-.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:8px}
+.dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:34px}
 .dcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--caqui);border-radius:14px;
   overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:.25s;display:flex;flex-direction:column}
 .dcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-left-color:var(--vermelho)}
@@ -219,8 +220,8 @@ footer b{color:var(--caqui-d)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .overlay .msg{font-family:'Teko';font-size:22px;color:var(--preto);letter-spacing:.5px}
 
-@media(max-width:1080px){.kpi-row{grid-template-columns:repeat(3,1fr)}.g-2,.g-21{grid-template-columns:1fr}}
-@media(max-width:680px){.kpi-row{grid-template-columns:repeat(2,1fr)}.hd{flex-wrap:wrap;gap:16px}.hd-badge{display:none}
+@media(max-width:1080px){.kpi-row{grid-template-columns:repeat(3,1fr)}.kpi-row.bo-kpi-row{grid-template-columns:repeat(2,1fr)}.g-2,.g-21{grid-template-columns:1fr}}
+@media(max-width:680px){.kpi-row,.kpi-row.bo-kpi-row{grid-template-columns:repeat(2,1fr)}.hd{flex-wrap:wrap;gap:16px}.hd-badge{display:none}
   .crest{height:74px}h1{font-size:32px}select{min-width:100%}.fg{width:100%}.tb-right{width:100%;margin-left:0}
   .status-src{display:none}.bd-meta{display:none}}
 @media print{body{background:#fff;background-image:none}.toolbar,.tb-right,.statusbar,.overlay{display:none}.mapbox{height:340px}}
@@ -291,7 +292,7 @@ footer b{color:var(--caqui-d)}
     <div class="fg"><label for="f-op">Operação</label><select id="f-op"><option value="">Todas as operações</option></select></div>
     <div class="fg"><label for="f-bairro">Bairro</label><select id="f-bairro"><option value="">Todos os bairros</option></select></div>
     <div class="fg"><label for="f-faixa">Faixa horária</label><select id="f-faixa"><option value="">Todas as faixas</option></select></div>
-    <div class="tb-right"><button class="btn ghost" id="btn-clear-rat">Limpar filtros</button><button class="btn btn-reload">↻ Atualizar dados</button></div>
+    <div class="tb-right"><button class="btn ghost" id="btn-clear-rat">Limpar filtros</button></div>
   </div>
 
   <div class="section-title">Evolução <span>Diária da Operação</span></div>
@@ -350,21 +351,24 @@ footer b{color:var(--caqui-d)}
     <div class="dest-grid" id="destGrid"></div>
   </div>
 
-  <div class="kpi-row">
-    <div class="kpi" style="--accent:var(--preto)"><div class="lbl">Ocorrências (REDS)</div><div class="val" id="bk-tot">—</div><div class="sub">boletins registrados</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Prisões / Detenções</div><div class="val" id="bk-pris">—</div><div class="sub">conduções realizadas</div></div>
-    <div class="kpi" style="--accent:var(--azul)"><div class="lbl">Veículos Removidos</div><div class="val" id="bk-veic">—</div><div class="sub">removidos + apreendidos</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Crack (pedras)</div><div class="val" id="bk-crack">—</div><div class="sub">entorpecente apreendido</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Armas Brancas</div><div class="val" id="bk-arm">—</div><div class="sub">instrumentos apreendidos</div></div>
-    <div class="kpi" style="--accent:var(--vermelho)"><div class="lbl">Armas de Fogo</div><div class="val" id="bk-fogo">—</div><div class="sub">apreendidas</div></div>
-  </div>
-
   <div class="toolbar">
     <div class="fg"><label for="bf-data">Data</label><select id="bf-data"><option value="">Todas as datas</option></select></div>
     <div class="fg"><label for="bf-nat">Natureza</label><select id="bf-nat"><option value="">Todas as naturezas</option></select></div>
     <div class="fg"><label for="bf-bairro">Bairro</label><select id="bf-bairro"><option value="">Todos os bairros</option></select></div>
     <div class="fg"><label for="bf-faixa">Faixa horária</label><select id="bf-faixa"><option value="">Todas as faixas</option></select></div>
-    <div class="tb-right"><button class="btn ghost" id="btn-clear-bo">Limpar filtros</button><button class="btn btn-reload">↻ Atualizar dados</button></div>
+    <div class="tb-right"><button class="btn ghost" id="btn-clear-bo">Limpar filtros</button></div>
+  </div>
+
+
+  <div class="kpi-row bo-kpi-row">
+    <div class="kpi" style="--accent:#373435"><div class="lbl">Ocorrências (REDS)</div><div class="val" id="bk-tot">—</div><div class="sub">boletins registrados</div></div>
+    <div class="kpi" style="--accent:#AB2328"><div class="lbl">Prisões / Detenções</div><div class="val" id="bk-pris">—</div><div class="sub">conduções realizadas</div></div>
+    <div class="kpi" style="--accent:#9e7b4f"><div class="lbl">Armas de Fogo</div><div class="val" id="bk-fogo">—</div><div class="sub">apreendidas</div></div>
+    <div class="kpi" style="--accent:#8c1c20"><div class="lbl">Crack</div><div class="val" id="bk-crack">—</div><div class="sub">entorpecente apreendido</div></div>
+    <div class="kpi" style="--accent:#857649"><div class="lbl">Cocaína</div><div class="val" id="bk-cocaina">—</div><div class="sub">entorpecente apreendido</div></div>
+    <div class="kpi" style="--accent:#5a7a52"><div class="lbl">Maconha</div><div class="val" id="bk-maconha">—</div><div class="sub">entorpecente apreendido</div></div>
+    <div class="kpi" style="--accent:#c8951e"><div class="lbl">Armas Brancas</div><div class="val" id="bk-arm">—</div><div class="sub">instrumentos apreendidos</div></div>
+    <div class="kpi" style="--accent:#3d5a73"><div class="lbl">Veículos Removidos</div><div class="val" id="bk-veic">—</div><div class="sub">removidos + apreendidos</div></div>
   </div>
 
   <div class="section-title">Evolução <span>Diária das Ocorrências</span></div>
@@ -383,11 +387,6 @@ footer b{color:var(--caqui-d)}
     <div class="panel"><div class="p-head"><h2>Registro por Unidade</h2><span class="hint">fração responsável</span></div><div class="p-body"><div class="chartbox"><canvas id="chBOunid"></canvas></div></div></div>
   </div>
 
-  <div class="section-title">Apreensões e <span>Contexto</span></div>
-  <div class="grid g-2" style="margin-bottom:22px">
-    <div class="panel"><div class="p-head"><h2>Materiais e Drogas Apreendidos</h2><span class="hint">por tipo · quantidade</span></div><div class="p-body"><div class="chartbox"><canvas id="chBOmat"></canvas></div></div></div>
-    <div class="panel"><div class="p-head"><h2>Meio Utilizado</h2><span class="hint">modus / instrumento</span></div><div class="p-body"><div class="chartbox"><canvas id="chBOmeio"></canvas></div></div></div>
-  </div>
 
   <div class="section-title">Dispersão <span>Georreferenciada (BO)</span></div>
   <div class="panel" style="margin-bottom:8px">
@@ -406,6 +405,9 @@ footer b{color:var(--caqui-d)}
         <th data-s="prisoes">Prisões <span class="ar">▲▼</span></th><th data-s="nveic">Vtr <span class="ar">▲▼</span></th>
         <th data-s="nmat">Materiais <span class="ar">▲▼</span></th>
       </tr></thead><tbody id="boTblBody"></tbody></table>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:14px">
+      <button id="btn-load-more-bo" class="btn">Carregar mais</button>
     </div></div>
   </div>
 
@@ -706,8 +708,10 @@ function buildBO(csv){
   const raw=Papa.parse(csv.trim(),{delimiter:';',header:true,skipEmptyLines:true}).data.filter(r=>r.NUMERO_REDS);
   const records=raw.map(r=>{
     const mats=pMat(r.MATERIAIS),veics=pVeic(r.VEICULOS);
-    let crack=0,ab=0;mats.forEach(m=>{const t=m.tipo.toUpperCase();
+    let crack=0,cocaina=0,maconha=0,ab=0;mats.forEach(m=>{const t=m.tipo.toUpperCase(),tn=norm(m.tipo);
       if(t.includes('CRACK'))crack+=m.qtd;
+      if(tn.includes('cocaina'))cocaina+=m.qtd;
+      if(tn.includes('maconha')||tn.includes('cannabis'))maconha+=m.qtd;
       if(/PERFURANTE|CORTANTE|CONTUNDENTE|ARMA BRANCA/.test(t))ab++;});
     return {reds:(r.NUMERO_REDS||'').slice(0,17),hora:(r.HORARIO_FATO||'').slice(0,5),faixa6:r.FAIXA_HORA_6||'',
       bairro:normBairro(r.BAIRRO),logradouro:r.LOGRADOURO||'',
@@ -715,11 +719,13 @@ function buildBO(csv){
       meio:r.DESCRICAO_MEIO_UTILIZADO||'',causa:r.CAUSA_PRESUMIDA||'',
       unidade:r.UNID_REGISTRO_NIVEL_6||r.UNID_AREA_NIVEL_6||'',
       lat:f2(r.LATITUDE),lng:f2(r.LONGITUDE),prisoes:gi(r.QTDE_PRISAO),armasFogo:gi(r.QTDE_ARMAS_FOGO),
-      mats,veics,crack,ab,nveic:veics.length,nmat:mats.length,data:r.DATA_FATO||'',municipio:r.MUNICIPIO||''};});
+      mats,veics,crack,cocaina,maconha,ab,nveic:veics.length,nmat:mats.length,data:r.DATA_FATO||'',municipio:r.MUNICIPIO||''};});
   const meta={total:records.length,
     prisoes:records.reduce((s,r)=>s+r.prisoes,0),
     veiculos:records.reduce((s,r)=>s+r.nveic,0),
     crack:records.reduce((s,r)=>s+r.crack,0),
+    cocaina:records.reduce((s,r)=>s+r.cocaina,0),
+    maconha:records.reduce((s,r)=>s+r.maconha,0),
     armabranca:records.reduce((s,r)=>s+r.ab,0),
     materiais:records.reduce((s,r)=>s+r.nmat,0),
     datas:[...new Set(records.map(r=>r.data).filter(Boolean))].sort((a,b)=>{const p=s=>s.split('/').reverse().join('');return p(a)<p(b)?-1:1;}),
@@ -731,12 +737,25 @@ function buildBO(csv){
 /* ====================== ESTADO ====================== */
 let DR=null,DB=null,opColor={},natColor={};
 let sR={op:'',bairro:'',faixa:'',data:''},sortR='hora',dirR=1;
-let sB={nat:'',bairro:'',faixa:'',data:''},sortB='hora',dirB=1;
+let sB={nat:'',bairro:'',faixa:'',data:''},sortB='__recent',dirB=1,boVisible=15;
 let mapR,layerR,mapB,layerB;
 let chOp,chBairro,chHora,chUnid,chReds,chRTempo,chBOnat,chBObairro,chBOhora,chBOunid,chBOmat,chBOmeio,chBOtempo;
 
 const filtR=()=>DR.records.filter(r=>(!sR.op||r.operacao===sR.op)&&(!sR.bairro||r.bairro===sR.bairro)&&(!sR.faixa||r.faixa6===sR.faixa)&&(!sR.data||r.data===sR.data));
 const filtB=()=>DB.records.filter(r=>(!sB.nat||r.natureza===sB.nat)&&(!sB.bairro||r.bairro===sB.bairro)&&(!sB.faixa||r.faixa6===sB.faixa)&&(!sB.data||r.data===sB.data));
+
+function recentStamp(r){
+  const ds=(r.data||'').trim(), hs=(r.hora||'00:00').trim();
+  let y=1970,m=1,d=1;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(ds)){
+    [y,m,d]=ds.split('-').map(Number);
+  }else if(/^\d{2}\/\d{2}\/\d{4}$/.test(ds)){
+    [d,m,y]=ds.split('/').map(Number);
+  }
+  let hh=0,mm=0; const hm=hs.match(/(\d{1,2}):(\d{2})/);
+  if(hm){hh=+hm[1];mm=+hm[2];}
+  return new Date(y,(m||1)-1,d||1,hh,mm).getTime();
+}
 
 /* ---- charts RAT (idênticos à versão validada) ---- */
 function chartsR(){
@@ -827,8 +846,13 @@ function chartsB(){
   const rows=filtB();
   const nat=countBy(rows,'natureza');
   if(chBOnat)chBOnat.destroy();
-  chBOnat=hbar('chBOnat',nat.map(x=>shortNat(x[0])),nat.map(x=>x[1]),null,' ocorr.',nat.map(x=>x[0]),nat.map(x=>natColor[x[0]]));
-  const b=countBy(rows,'bairro');
+  chBOnat=new Chart(chartCtx('chBOnat'),{
+    type:'doughnut',
+    data:{labels:nat.map(x=>shortNat(x[0])),datasets:[{data:nat.map(x=>x[1]),backgroundColor:nat.map(x=>natColor[x[0]]),borderColor:'#fff',borderWidth:3,hoverOffset:8}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'right',labels:{padding:11,usePointStyle:true,pointStyle:'circle',font:{size:11},boxWidth:8}},tooltip:{...tip(),callbacks:{title:c=>nat[c[0].dataIndex]?.[0]||c[0].label,label:c=>` ${c.raw} ocorrência(s)`}}}},
+    plugins:[centerText(()=>rows.length,'OCORRÊNCIAS')]
+  });
+  const b=countBy(rows,'bairro').slice(0,10);
   if(chBObairro)chBObairro.destroy();
   chBObairro=hbar('chBObairro',b.map(x=>x[0]),b.map(x=>x[1]),'#857649',' ocorr.');
   const hc={};rows.forEach(r=>{const h=+r.hora.slice(0,2);if(!isNaN(h))hc[h]=(hc[h]||0)+1;});
@@ -836,15 +860,6 @@ function chartsB(){
   const u=countBy(rows,'unidade');
   if(chBOunid)chBOunid.destroy();
   chBOunid=hbar('chBOunid',u.map(x=>x[0].replace('/4 BPM/5 RPM','').replace('/BPMRV/CPE','')),u.map(x=>x[1]),'#3d5a73',' ocorr.');
-  // materiais e drogas apreendidos por tipo (do recorte)
-  const matCat={};rows.forEach(r=>r.mats.forEach(m=>{const c=catMat(m.tipo);matCat[c]=(matCat[c]||0)+m.qtd;}));
-  const matArr=Object.entries(matCat).sort((a,b)=>b[1]-a[1]);
-  if(chBOmat)chBOmat.destroy();
-  chBOmat=hbar('chBOmat',matArr.map(x=>x[0]),matArr.map(x=>x[1]),null,' un.',matArr.map(x=>x[0]),matArr.map(x=>MATCOLOR[x[0]]||'#b3ab98'));
-  // meio utilizado
-  const meio=countBy(rows.filter(r=>r.meio&&r.meio.trim()&&!/IGNORADO|INEXISTENTE/.test(r.meio.toUpperCase())),'meio');
-  if(chBOmeio)chBOmeio.destroy();
-  chBOmeio=hbar('chBOmeio',meio.map(x=>shortMeio(x[0])),meio.map(x=>x[1]),'#857649',' ocorr.',meio.map(x=>x[0]));
   // série temporal — ocorrências e prisões por dia
   const dias=DB.meta.datas, oc={}, pr={};
   rows.forEach(r=>{oc[r.data]=(oc[r.data]||0)+1; pr[r.data]=(pr[r.data]||0)+r.prisoes;});
@@ -856,35 +871,45 @@ function chartsB(){
 }
 function mapBOf(){
   const rows=filtB();
-  if(!mapB){mapB=L.map('mapBO',{scrollWheelZoom:false}).setView([-19.762,-47.918],13);
+  if(!mapB){mapB=L.map('mapBO',{scrollWheelZoom:true}).setView([-19.762,-47.918],13);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap, © CARTO',maxZoom:19}).addTo(mapB);}
   if(layerB)layerB.remove();layerB=L.layerGroup().addTo(mapB);const pts=[];
   rows.forEach(r=>{if(!r.lat||!r.lng)return;const di=destByReds[r.reds];const isDest=di!==undefined;
-    const rad=isDest?16:(r.prisoes>0?13:8);const col=isDest?'#c8951e':natColor[r.natureza];
+    const rad=5; const col=natColor[r.natureza]||'#857649';
     const card=isDest?`<br><b style="color:#a07a12">★ Ocorrência em destaque</b><br><button onclick="openCard(${di})" style="margin-top:5px;cursor:pointer;font:inherit;background:#c8951e;color:#fff;border:none;padding:4px 10px;border-radius:6px">Ver card completo</button>`:'';
-    L.circleMarker([r.lat,r.lng],{radius:rad,fillColor:col,color:isDest?'#7a5e10':'#fff',weight:isDest?3:2,opacity:1,fillOpacity:.82})
+    L.circleMarker([r.lat,r.lng],{radius:rad,fillColor:col,color:col,weight:0,opacity:1,fillOpacity:.9})
       .bindPopup(`<b>${r.bairro}</b><br>${shortNat(r.natureza)}<br>${r.hora} · ${r.unidade.replace('/4 BPM/5 RPM','')}<br>${r.prisoes?'<span style="color:#8c1c20;font-weight:600">Prisões: '+r.prisoes+'</span><br>':''}Vtr: ${r.nveic} · Materiais: ${r.nmat}${card}`).addTo(layerB);
     pts.push([r.lat,r.lng]);});
   if(pts.length)mapB.fitBounds(pts,{padding:[40,40],maxZoom:14});
-  document.getElementById('boMapHint').textContent=`${pts.length} ocorrência(s) · ponto maior = com prisão`;
+  document.getElementById('boMapHint').textContent=`${pts.length} ocorrência(s) · cores por natureza`;
   const lg=document.getElementById('boMapLegend');lg.innerHTML='';
   DB.naturezas.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i style="background:${natColor[o.k]}"></i>${shortNat(o.k)}</span>`));
   setTimeout(()=>mapB.invalidateSize(),150);
 }
 function tableBO(){
   let rows=filtB();
-  rows.sort((a,b)=>{let x=a[sortB],y=b[sortB];if(typeof x==='string'){x=norm(x);y=norm(y);}return x<y?-dirB:x>y?dirB:0;});
+  rows.sort((a,b)=>{
+    if(sortB==='__recent') return recentStamp(b)-recentStamp(a);
+    let x=a[sortB],y=b[sortB];
+    if(typeof x==='string'){x=norm(x);y=norm(y);}return x<y?-dirB:x>y?dirB:0;
+  });
+  const total=rows.length, shown=Math.min(boVisible,total), slice=rows.slice(0,shown);
   const tb=document.getElementById('boTblBody');tb.innerHTML='';
-  rows.forEach(r=>{const di=destByReds[r.reds];const isDest=di!==undefined;
+  slice.forEach(r=>{const di=destByReds[r.reds];const isDest=di!==undefined;
     tb.insertAdjacentHTML('beforeend',`<tr${isDest?' style="background:#fbf6e9"':''}>
     <td class="mono">${isDest?`<span class="star" title="Ver card de destaque" onclick="openCard(${di})">★</span> `:''}${r.hora}<div class="rat-id">${r.reds}</div></td>
     <td><span class="cell-bairro">${r.bairro}</span><div class="cell-sub">${r.logradouro||''}</div></td>
     <td><span class="tg" style="background:${natColor[r.natureza]}">${shortNat(r.natureza)}</span></td>
     <td style="font-size:11.5px">${r.unidade.replace('/5 RPM','')}</td>
     <td>${r.prisoes?`<span class="pill pris">${r.prisoes} prisão(ões)</span>`:'<span class="pill zero">—</span>'}</td>
-    <td class="mono">${r.nveic||'<span class=\"pill zero\">—</span>'}</td>
-    <td class="mono">${r.nmat||'<span class=\"pill zero\">—</span>'}</td></tr>`);});
-  document.getElementById('boTblHint').textContent=`${rows.length} de ${DB.records.length} ocorrências · clique para ordenar`;
+    <td class="mono">${r.nveic||'<span class="pill zero">—</span>'}</td>
+    <td class="mono">${r.nmat||'<span class="pill zero">—</span>'}</td></tr>`);});
+  document.getElementById('boTblHint').textContent=`mostrando ${shown} de ${total} ocorrência(s)${sortB==='__recent'?' · mais recentes primeiro':' · clique para ordenar'}`;
+  const btn=document.getElementById('btn-load-more-bo');
+  if(btn){
+    btn.style.display=total>shown?'inline-flex':'none';
+    btn.textContent=total>shown?`Carregar mais 15 (${total-shown} restante${total-shown>1?'s':''})`:'Todos carregados';
+  }
 }
 function kpisB(){
   const rows=filtB();
@@ -892,10 +917,12 @@ function kpisB(){
   document.getElementById('bk-pris').textContent=rows.reduce((s,r)=>s+r.prisoes,0);
   document.getElementById('bk-veic').textContent=rows.reduce((s,r)=>s+r.nveic,0);
   document.getElementById('bk-crack').textContent=rows.reduce((s,r)=>s+r.crack,0);
+  document.getElementById('bk-cocaina').textContent=rows.reduce((s,r)=>s+r.cocaina,0);
+  document.getElementById('bk-maconha').textContent=rows.reduce((s,r)=>s+r.maconha,0);
   document.getElementById('bk-arm').textContent=rows.reduce((s,r)=>s+r.ab,0);
   document.getElementById('bk-fogo').textContent=rows.reduce((s,r)=>s+(r.armasFogo||0),0);
 }
-function renderB(){kpisB();chartsB();tableBO();mapBOf();}
+function renderB(){boVisible=15;kpisB();chartsB();tableBO();mapBOf();}
 
 /* ---- helpers de chart ---- */
 function chartCtx(id){return document.getElementById(id);}
@@ -944,7 +971,7 @@ function applyRAT(ds){
 function applyBO(ds){
   DB=ds;natColor={};DB.naturezas.forEach((o,i)=>natColor[o.k]=OPCOLORS[i%OPCOLORS.length]);
   const selN=document.getElementById('bf-nat');selN.innerHTML='<option value="">Todas as naturezas</option>';
-  DB.naturezas.forEach(o=>selN.insertAdjacentHTML('beforeend',`<option value="${o.k}">${shortNat(o.k)} (${o.v})</option>`));
+  DB.naturezas.forEach(o=>selN.insertAdjacentHTML('beforeend',`<option value="${o.k}">${shortNat(o.k)}</option>`));
   const selB=document.getElementById('bf-bairro');selB.innerHTML='<option value="">Todos os bairros</option>';
   DB.bairros.forEach(b=>selB.insertAdjacentHTML('beforeend',`<option value="${b.k}">${b.k} (${b.v})</option>`));
   const selF=document.getElementById('bf-faixa');selF.innerHTML='<option value="">Todas as faixas</option>';
@@ -1008,12 +1035,13 @@ document.getElementById('bf-bairro').addEventListener('change',e=>{sB.bairro=e.t
 document.getElementById('bf-faixa').addEventListener('change',e=>{sB.faixa=e.target.value;renderB();});
 document.getElementById('btn-clear-bo').addEventListener('click',()=>{sB={nat:'',bairro:'',faixa:'',data:''};
   ['bf-nat','bf-bairro','bf-faixa','bf-data'].forEach(i=>document.getElementById(i).value='');renderB();});
+document.getElementById('btn-load-more-bo').addEventListener('click',()=>{boVisible+=15;tableBO();});
 document.querySelectorAll('#tblBody').forEach(()=>{});
 document.querySelectorAll('table.dt').forEach(tbl=>{
   const isBO=tbl.querySelector('#boTblBody'); 
   tbl.querySelectorAll('th').forEach(th=>th.addEventListener('click',()=>{
     const k=th.dataset.s;
-    if(isBO){if(sortB===k)dirB*=-1;else{sortB=k;dirB=1;}tableBO();}
+    if(isBO){boVisible=15;if(sortB===k)dirB*=-1;else{sortB=k;dirB=1;}tableBO();}
     else{if(sortR===k)dirR*=-1;else{sortR=k;dirR=1;}tableRAT();}
   }));
 });
