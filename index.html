@@ -676,7 +676,14 @@ function buildRAT(csv){
       efetivo:efetivos.length,
       viaturas:viaturaIds.length,
       efetivos,viaturaIds,
-      reds,indicadores:inds,data:r.DATA_FATO||'',municipio:r.MUNICIPIO||'',nomeOp:r.NOME_OPERACAO||''};});
+      reds,indicadores:inds,
+      // Data da atividade: prioriza a data operacional de término, depois início e, por fim, a data do fato.
+      // Isso evita que atividades encerradas no dia seguinte deixem de aparecer no filtro do último dia.
+      data:r.OPR_DATA_TERMINO||r.OPR_DATA_INICIO||r.DATA_FATO||'',
+      dataInicio:r.OPR_DATA_INICIO||'',
+      dataTermino:r.OPR_DATA_TERMINO||'',
+      dataFato:r.DATA_FATO||'',
+      municipio:r.MUNICIPIO||'',nomeOp:r.NOME_OPERACAO||''};});
   const milSet=new Set(),viaSet=new Set();
   raw.forEach(r=>{(r.EFETIVOS||'').match(/numeroPolicia:(\d+)/g)?.forEach(x=>milSet.add(x));
     [...(r.VIATURAS||'').matchAll(/prefixo:([^/]+)\//g)].forEach(x=>viaSet.add(x[1].trim()));});
@@ -684,7 +691,8 @@ function buildRAT(csv){
   const prod_item=Object.entries(prodItem).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({k,v}));
   const redsAll={};records.forEach(r=>r.reds.forEach(x=>redsAll[x]=(redsAll[x]||0)+1));
   const reds=Object.entries(redsAll).sort((a,b)=>b[1]-a[1]).map(([k,v])=>({k,v}));
-  const datas=[...new Set(records.map(r=>r.data).filter(Boolean))].sort((a,b)=>{const p=s=>s.split('/').reverse().join('');return p(a)<p(b)?-1:1;});
+  const datas=[...new Set(records.flatMap(r=>[r.data,r.dataInicio,r.dataTermino,r.dataFato]).filter(Boolean))]
+    .sort((a,b)=>{const p=s=>s.split('/').reverse().join('');return p(a)<p(b)?-1:1;});
   const tot=records.reduce((s,r)=>s+r.min,0);
   return {records,operacoes:topCount(records.map(r=>r.operacao)),bairros:topCount(records.map(r=>r.bairro)),
     unidades:topCount(records.map(r=>r.unidade)),faixas:FAIXAS.map(f=>({k:f,v:records.filter(r=>r.faixa6===f).length})),
@@ -739,7 +747,7 @@ let sB={nat:'',bairro:'',faixa:'',data:''},sortB='__recent',dirB=1,boVisible=15;
 let mapR,layerR,mapB,layerB;
 let chOp,chBairro,chHora,chUnid,chReds,chRTempo,chBOnat,chBObairro,chBOhora,chBOunid,chBOmat,chBOmeio,chBOtempo;
 
-const filtR=()=>DR.records.filter(r=>(!sR.op||r.operacao===sR.op)&&(!sR.bairro||r.bairro===sR.bairro)&&(!sR.faixa||r.faixa6===sR.faixa)&&(!sR.data||r.data===sR.data));
+const filtR=()=>DR.records.filter(r=>(!sR.op||r.operacao===sR.op)&&(!sR.bairro||r.bairro===sR.bairro)&&(!sR.faixa||r.faixa6===sR.faixa)&&(!sR.data||[r.data,r.dataInicio,r.dataTermino,r.dataFato].includes(sR.data)));
 const filtB=()=>DB.records.filter(r=>(!sB.nat||r.natureza===sB.nat)&&(!sB.bairro||r.bairro===sB.bairro)&&(!sB.faixa||r.faixa6===sB.faixa)&&(!sB.data||r.data===sB.data));
 
 function recentStamp(r){
