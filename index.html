@@ -158,6 +158,10 @@ select:focus{border-color:var(--caqui);background:#fff;box-shadow:0 0 0 3px rgba
 .map-legend{display:flex;gap:16px;flex-wrap:wrap;padding:12px 20px;font-size:11.5px;color:var(--muted);
   border-top:1px solid var(--line2);background:var(--soft)}
 .map-legend i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.bo-legend-icon,.bo-ico-marker{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.bo-legend-icon{width:16px;height:16px;border-radius:50%;margin-right:6px;background:var(--mcol,#857649);color:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.12);font-size:11px}
+.bo-ico-wrap{background:transparent;border:none}
+.bo-ico-marker{width:18px;height:18px;border-radius:50%;background:var(--mcol,#857649);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.22);font-size:12px;font-weight:700}
 
 .tbl-wrap{overflow-x:auto}
 table.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
@@ -619,6 +623,20 @@ const shortNat=s=>s.replace('APLICACAO  MEDIDAS ADM PREVISTAS NO ARTIGO 269 DO C
   .replace('CONDUZIR VEICULO SOB INFLUENCIA DE ALCOOL/SUBST. PSICOATIVA','Embriaguez ao volante')
   .replace('PORTE ILEGAL DE ARMA DE FOGO','Porte de arma de fogo')
   .replace('RECEPTACAO','Receptação').replace('DESOBEDIENCIA','Desobediência');
+const natGlyph=s=>{const t=norm(shortNat(s));
+  if(t.includes('art. 269 ctb')||t.includes('embriaguez ao volante')) return '🚗';
+  if(t.includes('averiguacao pessoa/veiculo')) return '🔎';
+  if(t.includes('arma branca')) return '🔪';
+  if(t.includes('uso/consumo de drogas')) return '💊';
+  if(t.includes('trafico de drogas')) return '🚨';
+  if(t.includes('foragido da justica')) return '🏃';
+  if(t.includes('visita tranquilizadora')) return '🏠';
+  if(t.includes('maconha')) return '🌿';
+  if(t.includes('arma de fogo')) return '🔫';
+  if(t.includes('desobediencia')) return '⚠';
+  if(t.includes('receptacao')) return '📦';
+  return '•';
+};
 const catMat=t=>{const T=(t||'').toUpperCase();
   if(T.includes('CRACK'))return 'Crack';
   if(T.includes('MACONHA')||T.includes('CANNABIS'))return 'Maconha';
@@ -647,6 +665,21 @@ const normBairro=b=>{
 /* ====================== PIPELINE RAT ====================== */
 const opShort=s=>s.replace('OUTRAS OPERACAO ','').replace('OPERAÇÃO DE ','').replace('OPERACAO DE ','')
   .replace('OPERACAO ','').replace('FISCALIZAÇÃO DE ','FISC. ').replace('FISCALIZACAO DE ','FISC. ');
+const opGlyph=s=>{const t=norm(opShort(s));
+  if(t.includes('combate ao crime organizado')) return '🛡️';
+  if(t.includes('batida policial')) return '🚓';
+  if(t.includes('transito seguro')) return '🚦';
+  if(t.includes('deteccao de armas')||t.includes('drogas')) return '🔎';
+  if(t.includes('restricao lateral')) return '🚧';
+  if(t.includes('zona quente')) return '🔥';
+  if(t.includes('transporte ilegal')) return '🚌';
+  if(t.includes('presenca')) return '👮';
+  if(t.includes('area de risco')) return '⚠';
+  if(t.includes('aerea')||t.includes('reconhecimento')) return '🚁';
+  if(t.includes('proteja seu bairro')) return '🏘️';
+  if(t.includes('antidrogas')) return '💊';
+  return '•';
+};
 function classificaInd(desc){const d=desc.toUpperCase();
   if(d.includes('ABORDAD'))return 'Pessoas abordadas';
   if(d.includes('VEÍCULOS FISCALIZ')||d.includes('VEICULOS FISCALIZ'))return 'Veículos fiscalizados';
@@ -805,14 +838,14 @@ function mapRAT(){
   if(!mapR){mapR=L.map('map',{scrollWheelZoom:true}).setView([-19.762,-47.918],13);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap, © CARTO',maxZoom:19}).addTo(mapR);}
   if(layerR)layerR.remove();layerR=L.layerGroup().addTo(mapR);const pts=[];
-  rows.forEach(r=>{if(!r.lat||!r.lng)return;const col=opColor[r.operacao]||'#857649';
-    L.circleMarker([r.lat,r.lng],{radius:6,fillColor:col,color:col,weight:0,opacity:1,fillOpacity:.88})
-      .bindPopup(`<b>${r.bairro}</b><br>${opShort(r.operacao)}<br>${r.ini}–${r.fim} · ${r.min} min<br>${r.unidade.replace('/5 RPM','')}<br>Efetivo: ${r.efetivo} · Vtr: ${r.viaturas}${r.reds.length?'<br><span style="color:#8c1c20;font-weight:600">REDS: '+r.reds.length+'</span>':''}`).addTo(layerR);
+  rows.forEach(r=>{if(!r.lat||!r.lng)return;const col=opColor[r.operacao]||'#857649', ico=opGlyph(r.operacao);
+    const marker=L.marker([r.lat,r.lng],{icon:L.divIcon({className:'bo-ico-wrap',html:`<div class="bo-ico-marker" style="--mcol:${col}">${ico}</div>`,iconSize:[18,18],iconAnchor:[9,9],popupAnchor:[0,-10]})});
+    marker.bindPopup(`<b>${r.bairro}</b><br>${opShort(r.operacao)}<br>${r.ini}–${r.fim} · ${r.min} min<br>${r.unidade.replace('/5 RPM','')}<br>Efetivo: ${r.efetivo} · Vtr: ${r.viaturas}${r.reds.length?'<br><span style="color:#8c1c20;font-weight:600">REDS: '+r.reds.length+'</span>':''}`).addTo(layerR);
     pts.push([r.lat,r.lng]);});
   if(pts.length)mapR.fitBounds(pts,{padding:[40,40],maxZoom:14});
-  document.getElementById('mapHint').textContent=`${pts.length} ponto(s) · cores por tipo de operação`;
+  document.getElementById('mapHint').textContent=`${pts.length} atividade(s) · ícones por tipo de operação`;
   const lg=document.getElementById('mapLegend');lg.innerHTML='';
-  DR.operacoes.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i style="background:${opColor[o.k]}"></i>${opShort(o.k)}</span>`));
+  DR.operacoes.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i class="bo-legend-icon" style="--mcol:${opColor[o.k]}">${opGlyph(o.k)}</i>${opShort(o.k)}</span>`));
   setTimeout(()=>mapR.invalidateSize(),150);
 }
 function tableRAT(){
@@ -891,15 +924,15 @@ function mapBOf(){
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap, © CARTO',maxZoom:19}).addTo(mapB);}
   if(layerB)layerB.remove();layerB=L.layerGroup().addTo(mapB);const pts=[];
   rows.forEach(r=>{if(!r.lat||!r.lng)return;const di=destByReds[r.reds];const isDest=di!==undefined;
-    const rad=5; const col=natColor[r.natureza]||'#857649';
+    const col=natColor[r.natureza]||'#857649', ico=natGlyph(r.natureza);
     const card=isDest?`<br><b style="color:#a07a12">★ Ocorrência em destaque</b><br><button onclick="openCard(${di})" style="margin-top:5px;cursor:pointer;font:inherit;background:#c8951e;color:#fff;border:none;padding:4px 10px;border-radius:6px">Ver card completo</button>`:'';
-    L.circleMarker([r.lat,r.lng],{radius:rad,fillColor:col,color:col,weight:0,opacity:1,fillOpacity:.9})
-      .bindPopup(`<b>${r.bairro}</b><br>${shortNat(r.natureza)}<br>${r.hora} · ${r.unidade.replace('/4 BPM/5 RPM','')}<br>${r.prisoes?'<span style="color:#8c1c20;font-weight:600">Prisões: '+r.prisoes+'</span><br>':''}Vtr: ${r.nveic} · Materiais: ${r.nmat}${card}`).addTo(layerB);
+    const marker=L.marker([r.lat,r.lng],{icon:L.divIcon({className:'bo-ico-wrap',html:`<div class="bo-ico-marker" style="--mcol:${col}">${ico}</div>`,iconSize:[18,18],iconAnchor:[9,9],popupAnchor:[0,-10]})});
+    marker.bindPopup(`<b>${r.bairro}</b><br>${shortNat(r.natureza)}<br>${r.hora} · ${r.unidade.replace('/4 BPM/5 RPM','')}<br>${r.prisoes?'<span style="color:#8c1c20;font-weight:600">Prisões: '+r.prisoes+'</span><br>':''}Vtr: ${r.nveic} · Materiais: ${r.nmat}${card}`).addTo(layerB);
     pts.push([r.lat,r.lng]);});
   if(pts.length)mapB.fitBounds(pts,{padding:[40,40],maxZoom:14});
-  document.getElementById('boMapHint').textContent=`${pts.length} ocorrência(s) · cores por natureza`;
+  document.getElementById('boMapHint').textContent=`${pts.length} ocorrência(s) · ícones por natureza`;
   const lg=document.getElementById('boMapLegend');lg.innerHTML='';
-  DB.naturezas.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i style="background:${natColor[o.k]}"></i>${shortNat(o.k)}</span>`));
+  DB.naturezas.forEach(o=>lg.insertAdjacentHTML('beforeend',`<span><i class="bo-legend-icon" style="--mcol:${natColor[o.k]}">${natGlyph(o.k)}</i>${shortNat(o.k)}</span>`));
   setTimeout(()=>mapB.invalidateSize(),150);
 }
 function tableBO(){
